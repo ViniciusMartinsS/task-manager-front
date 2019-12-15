@@ -20,9 +20,10 @@ export abstract class HttpService {
     return this.http.get(`${url}${queryString}`, options).toPromise();
   }
 
-  protected async put(uri: string, request: any): Promise<any> {
+  protected async put(uri: string, request: any, authorization?: string): Promise<any> {
     const url = this.defineUrl(uri);
-    return this.http.put(url, request).toPromise();
+    const options = authorization ? { headers: { authorization } } : {}
+    return this.http.put(url, request, options).toPromise();
   }
 
   protected async delete(uri: string, authorization?: string): Promise<any> {

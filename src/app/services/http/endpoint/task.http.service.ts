@@ -12,8 +12,8 @@ export class TaskHttpService extends HttpService {
     this.baseURI = 'tasks';
   }
 
-  public create(requestModel: any, authorization: string): Promise<any> {
-    return this.post(this.baseURI, requestModel, authorization);
+  public create(request: any, authorization: string): Promise<any> {
+    return this.post(this.baseURI, request, authorization);
   }
 
   public list(projectId: number,  authorization: string): Promise<any> {
@@ -30,7 +30,7 @@ export class TaskHttpService extends HttpService {
     return this.delete(`${this.baseURI}/${taskId}`, authorization);
   }
 
-  public update(taskId: number, requestModel: any): Promise<any> {
-    return this.put(`${this.baseURI}/${taskId}`, requestModel);
+  public update(taskId: number, request: any, authorization: string): Promise<any> {
+    return this.put(`${this.baseURI}/${taskId}`, request, authorization);
   }
 }

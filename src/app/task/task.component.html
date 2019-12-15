@@ -43,7 +43,8 @@
 
             <i title="Task Done"
                class="glyphicon glyphicon-ok"
-               id="icon_done">
+               id="icon_done"
+            (click)="setTaskAsDone(task.id)">
             </i>
             <i
               title="Edit Task"
@@ -73,7 +74,7 @@
         </li>
       </ul>
     </div>
-    <span *ngIf="!tasks || !tasks.length">You dont have done tasks yet</span>
+    <span *ngIf="!tasksDone || !tasksDone.length">You dont have done tasks yet</span>
 
   </div>
   <div class="col-6 col-sm-4" align="center"></div>

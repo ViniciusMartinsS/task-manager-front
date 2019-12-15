@@ -39,6 +39,10 @@ export class TaskComponent implements OnInit {
   }
 
   private getUser(): void {
+    if (this.user) {
+       return
+    }
+
     this.user = JSON.parse(localStorage.getItem('_auth_info'));
   }
 
@@ -64,9 +68,7 @@ export class TaskComponent implements OnInit {
   }
 
   public async getTasks(projectId): Promise<void> {
-    if (!this.user) {
-      this.getUser();
-    }
+    this.getUser();
     const authorization = this.user.token;
 
     const { result } = await this.taskHttpService.list(projectId, authorization);
@@ -93,15 +95,28 @@ export class TaskComponent implements OnInit {
   }
 
   public async onRemove(taskId): Promise<void> {
-    if (!this.user) {
-      this.getUser();
-    }
-
+    this.getUser();
     const authorization = this.user.token;
     const response = await this.taskHttpService.remove(taskId, authorization);
 
     if (response && response.status && response.result) {
       this.toastrService.success('Task Removed Successfully', 'Congrats', {
+        timeOut: 3000
+      });
+    }
+
+    return this.getTasks(this.projectId);
+  }
+
+  public async setTaskAsDone(taskId) {
+    this.getUser();
+    const authorization = this.user.token;
+
+    const params = { done: true, endAt: new Date() };
+    const response = await this.taskHttpService.update(taskId, params, authorization);
+
+    if (response && response.status && response.result) {
+      this.toastrService.success('Your task is done!!', 'Congrats', {
         timeOut: 3000
       });
     }
