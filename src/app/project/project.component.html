@@ -5,8 +5,10 @@
 
   <div class="col-6 col-md-4">
     <h3>Create Your Project</h3>
+    <hr>
     <div class="panel panel-default">
       <div class="panel-body">
+
         <form class="col" [formGroup]="form">
         <div class="form-group">
           <h4>Project Name *</h4>
@@ -26,6 +28,7 @@
           </button>
         </div>
         </form>
+
       </div>
     </div>
     <br>
@@ -38,7 +41,21 @@
         <li class="list-group-item" *ngFor="let project of projects;">
           <h5>
             {{ project.name.toUpperCase() }}
-            <i class="glyphicon glyphicon-remove" id="icon" (click)="removeProjects(project.id)"></i>
+            <i title="See All Tasks"
+               class="glyphicon glyphicon-plus-sign"
+               id="icon_more">
+            </i>
+            <i
+              title="Edit Project"
+              class="glyphicon glyphicon-edit"
+              id="icon_edit">
+            </i>
+            <i
+              title="Remove Project"
+              class="glyphicon glyphicon-remove"
+              id="icon"
+              (click)="removeProjects(project.id)">
+            </i>
           </h5>
         </li>
       </ul>

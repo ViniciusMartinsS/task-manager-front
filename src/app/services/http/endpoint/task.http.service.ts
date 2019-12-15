@@ -12,19 +12,19 @@ export class TaskHttpService extends HttpService {
     this.baseURI = 'tasks';
   }
 
-  public createTask(requestModel: any): Promise<any> {
+  public create(requestModel: any): Promise<any> {
     return this.post(this.baseURI, requestModel);
   }
 
-  public getTasks(projectId: number): Promise<any> {
+  public list(projectId: number): Promise<any> {
     return this.get(`${this.baseURI}/${projectId}`);
   }
 
-  public deleteTask(taskId: number): Promise<any> {
+  public remove(taskId: number): Promise<any> {
     return this.delete(`${this.baseURI}/${taskId}`);
   }
 
-  public updateTask(taskId: number, requestModel: any): Promise<any> {
+  public update(taskId: number, requestModel: any): Promise<any> {
     return this.put(`${this.baseURI}/${taskId}`, requestModel);
   }
 }
