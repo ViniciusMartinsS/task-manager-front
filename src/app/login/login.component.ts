@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthHttpService } from '../services/http/endpoint/auth.http.service';
 import { omit } from 'lodash';
@@ -15,7 +16,8 @@ export class LoginComponent implements OnInit {
 
   constructor(
     private toastrService: ToastrService,
-    private authHttpService: AuthHttpService
+    private authHttpService: AuthHttpService,
+    private route: Router,
   ) {}
 
   ngOnInit() {
@@ -37,7 +39,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private localStorageData(user) {
+  private localStorageData(user): void {
     localStorage.setItem('_auth_token', user.token);
     localStorage.setItem('_auth_info', JSON.stringify(user));
   }
@@ -46,8 +48,9 @@ export class LoginComponent implements OnInit {
     try {
       const { result } = await this.authHttpService.auth(params);
       this.localStorageData(result);
+      await this.route.navigate(['/projects']);
     } catch (err) {
-      const { message } = err.error;
+      const { message = null } = err.error || err;
       this.toastrService.error(message, 'Something went wrong', {
         timeOut: 3000
       });
@@ -56,14 +59,16 @@ export class LoginComponent implements OnInit {
 
   private async register(params): Promise<void> {
     try {
-      const { result } = await this.authHttpService.register(params);
-      console.log(result);
+      const response = await this.authHttpService.register(params);
 
-      this.toastrService.success('User Created Successfully', 'Congrats', {
-        timeOut: 3000
-      });
+      if (response && response.status && response.result) {
+        this.toastrService.success('User Created Successfully', 'Congrats', {
+          timeOut: 3000
+        });
+
+      }
     } catch (err) {
-      const { message } = err.error;
+      const { message = null } = err.error || err;
       this.toastrService.error(message, 'Something went wrong', {
         timeOut: 3000
       });
@@ -79,7 +84,7 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const params = omit(this.form.value, [ 'name' ])
+    const params = omit(this.form.value, [ 'name' ]);
     this.login(params);
   }
 

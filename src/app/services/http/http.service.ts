@@ -11,9 +11,11 @@ export abstract class HttpService {
   protected async post(
     uri: string,
     requestModel: any,
+    authorization?: string
   ): Promise<any> {
     const url = this.defineUrl(uri);
-    return this.http.post(url, requestModel).toPromise();
+    const options = authorization ? { headers: { authorization } } : {}
+    return this.http.post(url, requestModel, options).toPromise();
   }
 
   protected async get(

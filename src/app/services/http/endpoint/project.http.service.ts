@@ -12,19 +12,19 @@ export class ProjectHttpService extends HttpService {
     this.baseURI = 'projects';
   }
 
-  public createProject(requestModel: any): Promise<any> {
-    return this.post(this.baseURI, requestModel);
+  public create(requestModel: any, authorization: string): Promise<any> {
+    return this.post(this.baseURI, requestModel, authorization);
   }
 
-  public getProjects(): Promise<any> {
+  public list(): Promise<any> {
     return this.get(this.baseURI);
   }
 
-  public deleteProject(projectId: number): Promise<any> {
+  public remove(projectId: number): Promise<any> {
     return this.delete(`${this.baseURI}/${projectId}`);
   }
 
-  public updateProject(projectId: number, requestModel: any): Promise<any> {
+  public update(projectId: number, requestModel: any): Promise<any> {
     return this.put(`${this.baseURI}/${projectId}`, requestModel);
   }
 }
