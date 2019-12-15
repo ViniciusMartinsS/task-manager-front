@@ -36,7 +36,10 @@
     <div *ngIf="projects && projects.length">
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let project of projects;">
-          <h5>{{ project.name.toUpperCase() }}</h5>
+          <h5>
+            {{ project.name.toUpperCase() }}
+            <i class="glyphicon glyphicon-remove" id="icon" (click)="removeProjects(project.id)"></i>
+          </h5>
         </li>
       </ul>
     </div>

@@ -45,7 +45,7 @@ export class ProjectComponent implements OnInit {
         });
       }
 
-      this.getProjects();
+      return this.getProjects();
     } catch (err) {
       const { message = null } = err.error || err;
       this.toastrService.error(message, 'Something went wrong', {
@@ -86,5 +86,22 @@ export class ProjectComponent implements OnInit {
     }
 
     this.projects = result;
+  }
+
+  public async removeProjects(projectId): Promise<void> {
+    if (!this.user) {
+      this.getUser();
+    }
+
+    const authorization = this.user.token;
+    const response = await this.projectHttpService.remove(projectId, authorization);
+
+    if (response && response.status && response.result) {
+      this.toastrService.success('Project Removed Successfully', 'Congrats', {
+        timeOut: 3000
+      });
+    }
+
+    return this.getProjects();
   }
 }

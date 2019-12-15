@@ -16,7 +16,7 @@ export class ProjectHttpService extends HttpService {
     return this.post(this.baseURI, requestModel, authorization);
   }
 
-  public list(userId, authorization): Promise<any> {
+  public list(userId: number, authorization: string): Promise<any> {
     let queryString = null;
 
     if (userId) {
@@ -26,8 +26,8 @@ export class ProjectHttpService extends HttpService {
     return this.get(this.baseURI, queryString, authorization);
   }
 
-  public remove(projectId: number): Promise<any> {
-    return this.delete(`${this.baseURI}/${projectId}`);
+  public remove(projectId: number, authorization: string): Promise<any> {
+    return this.delete(`${this.baseURI}/${projectId}`, authorization);
   }
 
   public update(projectId: number, requestModel: any): Promise<any> {
