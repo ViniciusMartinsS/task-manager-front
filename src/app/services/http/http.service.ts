@@ -17,7 +17,7 @@ export abstract class HttpService {
   protected async get(uri: string, queryString?: string, authorization?: string): Promise<any> {
     const url = this.defineUrl(uri);
     const options = authorization ? { headers: { authorization } } : {}
-    return this.http.get(`${url}?${queryString}`, options).toPromise();
+    return this.http.get(`${url}${queryString}`, options).toPromise();
   }
 
   protected async put(uri: string, request: any): Promise<any> {

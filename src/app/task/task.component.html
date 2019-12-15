@@ -1,0 +1,80 @@
+<app-nav-bar></app-nav-bar>
+<br><br><br>
+<div class="row">
+  <div class="col-6 col-sm-4" align="center"></div>
+  <div class="col-6 col-sm-4">
+
+      <h3>Create Your Task</h3>
+      <hr>
+      <div class="panel panel-default">
+        <div class="panel-body">
+
+          <form class="col" [formGroup]="form">
+            <div class="form-group">
+              <h4>Task Description *</h4>
+              <input
+                class="form-control"
+                formControlName="description"
+                type="name"
+                aria-label="description">
+            </div>
+            <div class="form-group">
+              <button (click)="onSubmit()" class="btn btn-success">
+                Add Task
+              </button>
+              &nbsp;
+              <button (click)="form.reset();" class="btn btn-danger">
+                Clear Field
+              </button>
+            </div>
+          </form>
+
+        </div>
+      </div>
+      <br>
+
+    <h3>Tasks To Do</h3>
+    <hr>
+    <div *ngIf="tasks && tasks.length">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let task of tasks;">
+          <h5>
+            {{ task.description.toUpperCase() }}
+
+            <i title="Task Done"
+               class="glyphicon glyphicon-ok"
+               id="icon_done">
+            </i>
+            <i
+              title="Edit Task"
+              class="glyphicon glyphicon-edit"
+              id="icon_edit">
+            </i>
+            <i
+              title="Remove Task"
+              class="glyphicon glyphicon-remove"
+              id="icon"
+              (click)="onRemove(task.id)">
+            </i>
+          </h5>
+        </li>
+      </ul>
+    </div>
+    <span *ngIf="!tasks || !tasks.length">You dont have tasks yet</span>
+
+    <br>
+
+    <h3>Tasks Done</h3>
+    <hr>
+    <div *ngIf="tasksDone && tasksDone.length">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let taskDone of tasksDone;">
+          <h5>{{ taskDone.description.toUpperCase() }} | {{ formatDoneDate(taskDone.endAt) }}</h5>
+        </li>
+      </ul>
+    </div>
+    <span *ngIf="!tasks || !tasks.length">You dont have done tasks yet</span>
+
+  </div>
+  <div class="col-6 col-sm-4" align="center"></div>
+</div>

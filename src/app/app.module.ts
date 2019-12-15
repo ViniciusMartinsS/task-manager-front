@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ProjectComponent } from './project/project.component';
+import { TaskComponent } from './task/task.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { ProjectComponent } from './project/project.component';
     AppComponent,
     LoginComponent,
     NavBarComponent,
-    ProjectComponent
+    ProjectComponent,
+    TaskComponent
   ],
   imports: [
     BrowserModule,

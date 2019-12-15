@@ -12,16 +12,22 @@ export class TaskHttpService extends HttpService {
     this.baseURI = 'tasks';
   }
 
-  public create(requestModel: any): Promise<any> {
-    return this.post(this.baseURI, requestModel);
+  public create(requestModel: any, authorization: string): Promise<any> {
+    return this.post(this.baseURI, requestModel, authorization);
   }
 
-  public list(projectId: number): Promise<any> {
-    return this.get(`${this.baseURI}/${projectId}`);
+  public list(projectId: number,  authorization: string): Promise<any> {
+    let queryString = null;
+
+    if (projectId) {
+      queryString = `?projectId=${projectId}`;
+    }
+
+    return this.get(this.baseURI, queryString, authorization);
   }
 
-  public remove(taskId: number): Promise<any> {
-    return this.delete(`${this.baseURI}/${taskId}`);
+  public remove(taskId: number, authorization: string): Promise<any> {
+    return this.delete(`${this.baseURI}/${taskId}`, authorization);
   }
 
   public update(taskId: number, requestModel: any): Promise<any> {

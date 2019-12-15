@@ -20,7 +20,7 @@ export class ProjectHttpService extends HttpService {
     let queryString = null;
 
     if (userId) {
-      queryString = `userId=${userId}`;
+      queryString = `?userId=${userId}`;
     }
 
     return this.get(this.baseURI, queryString, authorization);
