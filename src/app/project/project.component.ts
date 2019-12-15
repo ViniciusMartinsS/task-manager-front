@@ -54,6 +54,10 @@ export class ProjectComponent implements OnInit {
   }
 
   private getUser(): void {
+    if (this.user) {
+      return;
+    }
+
     this.user = JSON.parse(localStorage.getItem('_auth_info'));
   }
 
@@ -67,9 +71,7 @@ export class ProjectComponent implements OnInit {
   }
 
   public async getProjects(): Promise<void> {
-    if (!this.user) {
-      this.getUser();
-    }
+    this.getUser();
 
     const userId = this.user.id;
     const authorization = this.user.token;
@@ -85,16 +87,14 @@ export class ProjectComponent implements OnInit {
   }
 
   public async removeProjects(projectId): Promise<void> {
-    if (!this.user) {
-      this.getUser();
-    }
+    this.getUser();
 
     const authorization = this.user.token;
     const response = await this.projectHttpService.remove(projectId, authorization);
 
     if (response && response.status && response.result) {
       this.toastr.generateToastrAlert('Congrats', 'Project Removed Successfully', 'success');
-    }
+      }
 
     return this.getProjects();
   }
