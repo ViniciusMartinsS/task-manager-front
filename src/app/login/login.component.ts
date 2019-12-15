@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AuthHttpService } from '../services/http/endpoint/auth.http.service';
 import { omit } from 'lodash';
+import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +20,8 @@ export class LoginComponent implements OnInit {
     private authHttpService: AuthHttpService,
     private route: Router,
   ) {}
+
+  public toastr: ToastComponent = new ToastComponent(this.toastrService);
 
   ngOnInit() {
     this.initForm();
@@ -51,9 +54,7 @@ export class LoginComponent implements OnInit {
       await this.route.navigate(['/projects']);
     } catch (err) {
       const { message = null } = err.error || err;
-      this.toastrService.error(message, 'Something went wrong', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Something went wrong', message , 'error');
     }
   }
 
@@ -62,25 +63,17 @@ export class LoginComponent implements OnInit {
       const response = await this.authHttpService.register(params);
 
       if (response && response.status && response.result) {
-        this.toastrService.success('User Created Successfully', 'Congrats', {
-          timeOut: 3000
-        });
-
+        this.toastr.generateToastrAlert('Congrats', 'User Created Successfully' , 'success');
       }
     } catch (err) {
       const { message = null } = err.error || err;
-      this.toastrService.error(message, 'Something went wrong', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Something went wrong', message, 'error');
     }
   }
 
   public onSubmit(): void {
     if (this.form.invalid) {
-      this.toastrService.error('Check Your Form Data', 'Invalid Form', {
-        timeOut: 3000
-      });
-
+      this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
       return;
     }
 
@@ -90,10 +83,7 @@ export class LoginComponent implements OnInit {
 
   public onRegister(): void {
     if (this.form.invalid) {
-      this.toastrService.error('Check Your Form Data', 'Invalid Form', {
-        timeOut: 3000
-      });
-
+      this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
       return;
     }
 
@@ -107,6 +97,5 @@ export class LoginComponent implements OnInit {
     }
 
     this.registerField = false;
-    return;
   }
 }
