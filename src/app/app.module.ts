@@ -12,6 +12,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { ProjectComponent } from './project/project.component';
 import { TaskComponent } from './task/task.component';
+import { ToastComponent } from './shared/toast/toast.component';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { TaskComponent } from './task/task.component';
     LoginComponent,
     NavBarComponent,
     ProjectComponent,
-    TaskComponent
+    TaskComponent,
+    ToastComponent
   ],
   imports: [
     BrowserModule,
@@ -29,7 +31,8 @@ import { TaskComponent } from './task/task.component';
     BrowserAnimationsModule,
     ServicesModule.forRoot(),
     ToastrModule.forRoot(),
-    ReactiveFormsModule
+    ReactiveFormsModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ToastrService} from 'ngx-toastr';
+import { ToastrService } from 'ngx-toastr';
 import { ProjectHttpService } from '../services/http/endpoint/project.http.service';
+import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-project',
@@ -12,12 +13,14 @@ export class ProjectComponent implements OnInit {
   private user: any;
   public form: FormGroup;
   public projects: Array<any> | null = null;
-  public taskUrl = 'http://localhost:300/task/'
 
   constructor(
     private toastrService: ToastrService,
     private projectHttpService: ProjectHttpService,
   ) { }
+
+  public toastr: ToastComponent = new ToastComponent(this.toastrService);
+
 
   ngOnInit() {
     this.getProjects();
@@ -41,17 +44,13 @@ export class ProjectComponent implements OnInit {
       const response = await this.projectHttpService.create(params, this.user.token);
 
       if (response && response.status && response.result) {
-        this.toastrService.success('Project Created Successfully', 'Congrats', {
-          timeOut: 3000
-        });
+        this.toastr.generateToastrAlert('Project Created Successfully', 'Congrats', 'success');
       }
 
       return this.getProjects();
     } catch (err) {
       const { message = null } = err.error || err;
-      this.toastrService.error(message, 'Something went wrong', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert(message, 'Something went wrong', 'error');
     }
   }
 
@@ -61,10 +60,7 @@ export class ProjectComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.form.invalid) {
-      this.toastrService.error('Check Your Form Data', 'Invalid Form', {
-      timeOut: 3000
-      });
-
+      this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
       return;
   }
 
@@ -98,9 +94,7 @@ export class ProjectComponent implements OnInit {
     const response = await this.projectHttpService.remove(projectId, authorization);
 
     if (response && response.status && response.result) {
-      this.toastrService.success('Project Removed Successfully', 'Congrats', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Congrats', 'Project Removed Successfully', 'success');
     }
 
     return this.getProjects();
