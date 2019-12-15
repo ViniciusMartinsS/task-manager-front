@@ -41,10 +41,12 @@
         <li class="list-group-item" *ngFor="let project of projects;">
           <h5>
             {{ project.name.toUpperCase() }}
-            <i title="See All Tasks"
+            <a href="tasks/{{ project.id }}">
+              <i title="See All Tasks"
                class="glyphicon glyphicon-plus-sign"
                id="icon_more">
-            </i>
+              </i>
+            </a>
             <i
               title="Edit Project"
               class="glyphicon glyphicon-edit"

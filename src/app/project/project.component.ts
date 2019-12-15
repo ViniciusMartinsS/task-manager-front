@@ -12,6 +12,7 @@ export class ProjectComponent implements OnInit {
   private user: any;
   public form: FormGroup;
   public projects: Array<any> | null = null;
+  public taskUrl = 'http://localhost:300/task/'
 
   constructor(
     private toastrService: ToastrService,
