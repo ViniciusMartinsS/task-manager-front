@@ -9,29 +9,27 @@ export abstract class HttpService {
   ) {}
 
   protected async post(
-    uri: string,
-    requestModel: any,
-    authorization?: string
+    uri: string, request: any, authorization?: string
   ): Promise<any> {
     const url = this.defineUrl(uri);
     const options = authorization ? { headers: { authorization } } : {}
-    return this.http.post(url, requestModel, options).toPromise();
+    return this.http.post(url, request, options).toPromise();
   }
 
   protected async get(
-    uri: string,
-    requestModel?: any,
+    uri: string, queryString?: string, authorization?: string
   ): Promise<any> {
     const url = this.defineUrl(uri);
-    return this.http.get(url, requestModel).toPromise();
+    const options = authorization ? { headers: { authorization } } : {}
+    return this.http.get(`${url}?${queryString}`, options).toPromise();
   }
 
   protected async put(
     uri: string,
-    requestModel: any,
+    request: any,
   ): Promise<any> {
     const url = this.defineUrl(uri);
-    return this.http.put(url, requestModel).toPromise();
+    return this.http.put(url, request).toPromise();
   }
 
   protected async delete(

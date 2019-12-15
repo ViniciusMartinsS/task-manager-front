@@ -11,6 +11,7 @@ import { ProjectHttpService } from '../services/http/endpoint/project.http.servi
 export class ProjectComponent implements OnInit {
   private user: any;
   public form: FormGroup;
+  public projects: Array<any> | null = null;
 
   constructor(
     private toastrService: ToastrService,
@@ -18,6 +19,7 @@ export class ProjectComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getProjects();
     this.initForm();
   }
 
@@ -43,6 +45,7 @@ export class ProjectComponent implements OnInit {
         });
       }
 
+      this.getProjects();
     } catch (err) {
       const { message = null } = err.error || err;
       this.toastrService.error(message, 'Something went wrong', {
@@ -65,5 +68,23 @@ export class ProjectComponent implements OnInit {
   }
 
     this.createProject(this.form.value);
+  }
+
+  public async getProjects(): Promise<void> {
+    if (!this.user) {
+      this.getUser();
+    }
+
+    const userId = this.user.id;
+    const authorization = this.user.token;
+
+    const { result } = await this.projectHttpService.list(userId, authorization);
+
+    if (!result || !Array.isArray(result) || !result.length) {
+      this.projects = null;
+      return;
+    }
+
+    this.projects = result;
   }
 }

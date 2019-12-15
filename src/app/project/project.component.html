@@ -2,8 +2,9 @@
 <br><br><br>
 <div class="row">
   <div class="col-6 col-sm-4" align="center"></div>
+
   <div class="col-6 col-md-4">
-    <h3 align="center">Create Your Project</h3>
+    <h3>Create Your Project</h3>
     <div class="panel panel-default">
       <div class="panel-body">
         <form class="col" [formGroup]="form">
@@ -27,6 +28,20 @@
         </form>
       </div>
     </div>
+    <br>
+
+
+      <h3>All Your Projects</h3>
+    <hr>
+    <div *ngIf="projects && projects.length">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let project of projects;">
+          <h5>{{ project.name.toUpperCase() }}</h5>
+        </li>
+      </ul>
+    </div>
+    <span *ngIf="!projects || !projects.length">You dont have projects yet</span>
   </div>
+
   <div class="col-6 col-md-4"></div>
 </div>
