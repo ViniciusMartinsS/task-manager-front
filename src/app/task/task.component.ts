@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { TaskHttpService } from '../services/http/endpoint/task.http.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { ToastComponent } from '../shared/toast/toast.component';
 
 @Component({
   selector: 'app-task',
@@ -22,6 +23,8 @@ export class TaskComponent implements OnInit {
     private toastrService: ToastrService,
   ) { }
 
+  public toastr: ToastComponent = new ToastComponent(this.toastrService);
+
   ngOnInit() {
     this.projectId = this.route.snapshot.params.projectId;
     this.getTasks(this.projectId);
@@ -40,7 +43,7 @@ export class TaskComponent implements OnInit {
 
   private getUser(): void {
     if (this.user) {
-       return
+       return;
     }
 
     this.user = JSON.parse(localStorage.getItem('_auth_info'));
@@ -53,17 +56,13 @@ export class TaskComponent implements OnInit {
       const response = await this.taskHttpService.create(params, this.user.token);
 
       if (response && response.status && response.result) {
-        this.toastrService.success('Task Created Successfully', 'Congrats', {
-          timeOut: 3000
-        });
+        this.toastr.generateToastrAlert('Congrats', 'Task Created Successfully' , 'success');
       }
 
       return this.getTasks(this.projectId);
     } catch (err) {
       const { message = null } = err.error || err;
-      this.toastrService.error(message, 'Something went wrong', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Something went wrong', message , 'error');
     }
   }
 
@@ -84,10 +83,7 @@ export class TaskComponent implements OnInit {
 
   public onSubmit(): void {
     if (this.form.invalid) {
-      this.toastrService.error('Check Your Form Data', 'Invalid Form', {
-        timeOut: 3000
-      });
-
+      this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
       return;
     }
 
@@ -100,9 +96,7 @@ export class TaskComponent implements OnInit {
     const response = await this.taskHttpService.remove(taskId, authorization);
 
     if (response && response.status && response.result) {
-      this.toastrService.success('Task Removed Successfully', 'Congrats', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Congrats', 'Task Removed Successfully', 'success');
     }
 
     return this.getTasks(this.projectId);
@@ -116,9 +110,7 @@ export class TaskComponent implements OnInit {
     const response = await this.taskHttpService.update(taskId, params, authorization);
 
     if (response && response.status && response.result) {
-      this.toastrService.success('Your task is done!!', 'Congrats', {
-        timeOut: 3000
-      });
+      this.toastr.generateToastrAlert('Congrats', 'Your task is done!!', 'success');
     }
 
     return this.getTasks(this.projectId);

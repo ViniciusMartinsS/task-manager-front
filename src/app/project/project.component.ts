@@ -21,7 +21,6 @@ export class ProjectComponent implements OnInit {
 
   public toastr: ToastComponent = new ToastComponent(this.toastrService);
 
-
   ngOnInit() {
     this.getProjects();
     this.initForm();
@@ -44,13 +43,13 @@ export class ProjectComponent implements OnInit {
       const response = await this.projectHttpService.create(params, this.user.token);
 
       if (response && response.status && response.result) {
-        this.toastr.generateToastrAlert('Project Created Successfully', 'Congrats', 'success');
+        this.toastr.generateToastrAlert( 'Congrats', 'Project Created Successfully', 'success');
       }
 
       return this.getProjects();
     } catch (err) {
       const { message = null } = err.error || err;
-      this.toastr.generateToastrAlert(message, 'Something went wrong', 'error');
+      this.toastr.generateToastrAlert( 'Something went wrong', message, 'error');
     }
   }
 
