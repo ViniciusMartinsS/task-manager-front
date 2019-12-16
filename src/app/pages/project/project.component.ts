@@ -13,6 +13,8 @@ export class ProjectComponent implements OnInit {
   private user: any;
   public form: FormGroup;
   public projects: Array<any> | null = null;
+  public update: boolean = false;
+  public projectId: number = null;
 
   constructor(
     private toastrService: ToastrService,
@@ -53,6 +55,28 @@ export class ProjectComponent implements OnInit {
     }
   }
 
+  private async updateProject(project): Promise<void> {
+    try {
+      this.getUser();
+      const params  = { ...project };
+      const response = await this.projectHttpService.update(this.projectId, params, this.user.token);
+
+      if (response && response.status && response.result) {
+        this.toastr.generateToastrAlert( 'Congrats', 'Project Updated Successfully', 'success');
+      }
+
+      this.update = false;
+      this.projectId = null;
+
+      return this.getProjects();
+    } catch (err) {
+      console.log('Your dir right here! ');
+      console.dir(err, { depth: null });
+      const { message = null } = err.error || err;
+      this.toastr.generateToastrAlert( 'Something went wrong', message, 'error');
+    }
+  }
+
   private getUser(): void {
     if (this.user) {
       return;
@@ -66,6 +90,11 @@ export class ProjectComponent implements OnInit {
       this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
       return;
   }
+
+    if (this.update) {
+      this.updateProject(this.form.value);
+      return;
+    }
 
     this.createProject(this.form.value);
   }
@@ -97,5 +126,11 @@ export class ProjectComponent implements OnInit {
       }
 
     return this.getProjects();
+  }
+
+  public onRequestUpdate(name, projectId) {
+    this.form.setValue({ name });
+    this.update = true;
+    this.projectId = projectId;
   }
 }

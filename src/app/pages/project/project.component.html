@@ -19,8 +19,12 @@
             aria-label="Name">
         </div>
         <div class="form-group">
-          <button (click)="onSubmit()" class="btn btn-success">
+          <button *ngIf="!update" (click)="onSubmit()" class="btn btn-success">
             Generate Project
+          </button>
+
+          <button *ngIf="update" (click)="onSubmit()" class="btn btn-success">
+            Update Project
           </button>
           &nbsp;
           <button (click)="form.reset();" class="btn btn-danger">
@@ -28,7 +32,6 @@
           </button>
         </div>
         </form>
-
       </div>
     </div>
     <br>
@@ -41,16 +44,17 @@
         <li class="list-group-item" *ngFor="let project of projects;">
           <h5>
             {{ project.name.toUpperCase() }}
-            <a href="tasks/{{ project.id }}">
+            <a href="tasks/{{ project.id }}" style="color: black">
               <i title="See All Tasks"
                class="glyphicon glyphicon-plus-sign"
                id="icon_more">
               </i>
             </a>
-            <i
+              <i
               title="Edit Project"
               class="glyphicon glyphicon-edit"
-              id="icon_edit">
+              id="icon_edit"
+              (click)="onRequestUpdate(project.name, project.id)">
             </i>
             <i
               title="Remove Project"

@@ -12,8 +12,8 @@ export class ProjectHttpService extends HttpService {
     this.baseURI = 'projects';
   }
 
-  public create(requestModel: any, authorization: string): Promise<any> {
-    return this.post(this.baseURI, requestModel, authorization);
+  public create(request: any, authorization: string): Promise<any> {
+    return this.post(this.baseURI, request, authorization);
   }
 
   public list(userId: number, authorization: string): Promise<any> {
@@ -30,7 +30,7 @@ export class ProjectHttpService extends HttpService {
     return this.delete(`${this.baseURI}/${projectId}`, authorization);
   }
 
-  public update(projectId: number, requestModel: any): Promise<any> {
-    return this.put(`${this.baseURI}/${projectId}`, requestModel);
+  public update(projectId: number, request: any, authorization: string): Promise<any> {
+    return this.put(`${this.baseURI}/${projectId}`, request, authorization);
   }
 }
