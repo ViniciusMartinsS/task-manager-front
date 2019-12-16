@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { ProjectComponent } from './project/project.component';
 import { TaskComponent } from './task/task.component';
 import { ToastComponent } from './shared/toast/toast.component';
+import { AuthGuard } from './guard/auth.guard';
 
 
 @NgModule({
@@ -34,7 +35,9 @@ import { ToastComponent } from './shared/toast/toast.component';
     ReactiveFormsModule,
 
   ],
-  providers: [],
+  providers: [
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

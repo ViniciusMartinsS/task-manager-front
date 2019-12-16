@@ -18,7 +18,7 @@ export class NavBarComponent implements OnInit {
   }
 
   private checkLoggedUser(): void {
-    if (!Object.keys(this.user).length) {
+    if (!this.user || !Object.keys(this.user).length) {
       this.isLogged = false;
       return;
     }
