@@ -12,11 +12,11 @@ export class AuthHttpService extends HttpService {
     this.baseURI = 'auth';
   }
 
-  public auth(requestModel: any): Promise<any> {
-    return this.post(`${this.baseURI}/login`, requestModel);
+  public auth(request: any): Promise<any> {
+    return this.post(`${this.baseURI}/login`, request);
   }
 
-  public register(requestModel: any): Promise<any> {
-    return this.post(`${this.baseURI}/register`, requestModel);
+  public register(request: any): Promise<any> {
+    return this.post(`${this.baseURI}/register`, request);
   }
 }

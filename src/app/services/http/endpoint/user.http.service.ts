@@ -12,7 +12,7 @@ export class UserHttpService extends HttpService {
     this.baseURI = 'users';
   }
 
-  public getUser(requestModel: any): Promise<any> {
-    return this.get(this.baseURI, requestModel);
+  public getUser(request: any): Promise<any> {
+    return this.get(this.baseURI, request);
   }
 }
