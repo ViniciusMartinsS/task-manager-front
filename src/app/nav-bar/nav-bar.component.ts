@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-nav-bar',
@@ -7,18 +8,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class NavBarComponent implements OnInit {
   public isLogged: boolean = null;
+  public user: any = null;
 
-  constructor() { }
+  constructor(private route: Router) { }
 
   ngOnInit() {
+    this.getUser();
     this.checkLoggedUser();
   }
 
   private checkLoggedUser(): void {
-    const user = this.getUser();
-
-    // @ts-ignore
-    if (!Object.keys(user).length) {
+    if (!Object.keys(this.user).length) {
       this.isLogged = false;
       return;
     }
@@ -26,9 +26,13 @@ export class NavBarComponent implements OnInit {
     this.isLogged = true;
   }
 
-
   private getUser(): void {
-    return JSON.parse(localStorage.getItem('_auth_info'));
+    this.user = JSON.parse(localStorage.getItem('_auth_info'));
   }
 
+  public async onClick(): Promise<void> {
+    localStorage.clear();
+    this.user = null;
+    await this.route.navigate(['/login']);
+  }
 }
