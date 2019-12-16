@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { ProjectComponent } from './project/project.component';
-import { TaskComponent } from './task/task.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ProjectComponent } from './pages/project/project.component';
+import { TaskComponent } from './pages/task/task.component';
 import { AuthGuard } from './guard/auth.guard';
 
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { TaskHttpService } from '../services/http/endpoint/task.http.service';
+import { TaskHttpService } from '../../services/http/endpoint/task.http.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ToastComponent } from '../shared/toast/toast.component';
+import { ToastComponent } from '../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-task',

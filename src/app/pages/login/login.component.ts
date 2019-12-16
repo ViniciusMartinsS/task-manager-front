@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { AuthHttpService } from '../services/http/endpoint/auth.http.service';
+import { AuthHttpService } from '../../services/http/endpoint/auth.http.service';
 import { omit } from 'lodash';
-import { ToastComponent } from '../shared/toast/toast.component';
+import { ToastComponent } from '../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-login',

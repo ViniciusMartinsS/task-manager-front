@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { ProjectHttpService } from '../services/http/endpoint/project.http.service';
-import { ToastComponent } from '../shared/toast/toast.component';
+import { ProjectHttpService } from '../../services/http/endpoint/project.http.service';
+import { ToastComponent } from '../../shared/toast/toast.component';
 
 @Component({
   selector: 'app-project',
