@@ -19,8 +19,12 @@
                 aria-label="description">
             </div>
             <div class="form-group">
-              <button (click)="onSubmit()" class="btn btn-success">
+              <button *ngIf="!update" (click)="onSubmit()" class="btn btn-success">
                 Add Task
+              </button>
+
+              <button *ngIf="update" (click)="onSubmit()" class="btn btn-success">
+                Update Task
               </button>
               &nbsp;
               <button (click)="form.reset();" class="btn btn-danger">
@@ -49,7 +53,8 @@
             <i
               title="Edit Task"
               class="glyphicon glyphicon-edit"
-              id="icon_edit">
+              id="icon_edit"
+              (click)="onRequestUpdate(task.description, task.id)">
             </i>
             <i
               title="Remove Task"

@@ -13,6 +13,8 @@ import { ToastComponent } from '../../shared/toast/toast.component';
 export class TaskComponent implements OnInit {
   private user: any;
   private projectId: number;
+  public update: boolean = false;
+  public taskId: number = null;
   public form: FormGroup;
   public tasks: Array<any> | null = null;
   public tasksDone: Array<any> | null = null;
@@ -81,9 +83,34 @@ export class TaskComponent implements OnInit {
     this.tasksDone = result.filter(item => item.done);
   }
 
+  private async updateTask(task): Promise<void> {
+    try {
+      this.getUser();
+      const params  = { ...task };
+      const response = await this.taskHttpService.update(this.taskId, params, this.user.token);
+
+      if (response && response.status && response.result) {
+        this.toastr.generateToastrAlert( 'Congrats', 'Task Updated Successfully', 'success');
+      }
+
+      this.update = false;
+      this.taskId = null;
+
+      return this.getTasks(this.projectId);
+    } catch (err) {
+      const { message = null } = err.error || err;
+      this.toastr.generateToastrAlert( 'Something went wrong', message, 'error');
+    }
+  }
+
   public onSubmit(): void {
     if (this.form.invalid) {
       this.toastr.generateToastrAlert('Invalid Form', 'Check Your Form Data', 'error');
+      return;
+    }
+
+    if (this.update) {
+      this.updateTask(this.form.value);
       return;
     }
 
@@ -114,6 +141,12 @@ export class TaskComponent implements OnInit {
     }
 
     return this.getTasks(this.projectId);
+  }
+
+  public onRequestUpdate(description, taskId) {
+    this.form.setValue({ description });
+    this.update = true;
+    this.taskId = taskId;
   }
 
   public formatDoneDate(date): string {

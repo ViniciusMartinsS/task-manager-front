@@ -70,8 +70,6 @@ export class ProjectComponent implements OnInit {
 
       return this.getProjects();
     } catch (err) {
-      console.log('Your dir right here! ');
-      console.dir(err, { depth: null });
       const { message = null } = err.error || err;
       this.toastr.generateToastrAlert( 'Something went wrong', message, 'error');
     }
