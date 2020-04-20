@@ -1,6 +1,6 @@
 # Task Manager
 
-Task Manager is an application that allows you to create as much as projects you want, permitting you to trace all steps to complete the defined project
+Task Manager is an application that allows you to create as much as projects you want, permitting you to trace all steps to complete the defined project.
 
 
 ## Developer guide
